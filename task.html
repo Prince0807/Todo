@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %} {% endblock %}
+{% block content %}
+<div class="add_task_form">
+    <form action="{{ url_for("task.add_task")}}" method="POST" >
+        <input type="text" placeholder="add_task" id="title" name="title">
+        <button class="btn add_btn" type="submit"  id="title" name="title">ADD</button>
+    </form>
+</div>
+<div class="view_task_form">
+    <a href="{{ url_for('task.view_task') }}" class="btn view_btn">VIEW TASKS</a>
+      <button class="btn view_btn">VIEW</button>  
+   
+</div>
+<div class="all_delete_task_form">
+{% if task %}
+    <form action="{{ url_for("task.all_delete")}} " method="POST">
+        <button class="btn delete_btn">DELETE_ALL</button>
+        
+    </form>
+</div>
+<table class="table_form">
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>status</th>
+            <th>change</th>
+            <th>Toggle</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tas in task %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ tas.title }}</td>
+            <td>
+                
+                <span class="badge {{ tas.status|lower }}" > {{ tas.status }} </span>
+            </td>
+            <td>
+                <form action="{{ url_for("task.toggle",id = tas.id)}}" method="POST" >
+                    <button type="submit" class="btn next_btn">Next</button>
+                </form>
+            </td>
+            <td>
+                <form action="{{ url_for("task.delete",id=tas.id)}}" method="POST">
+                    <button type="submit" class="btn single_del">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>no task added . add one task !</p>
+{% endif %}
+{% endblock %}

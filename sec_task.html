@@ -1,0 +1,29 @@
+{% extends "sec_base.html" %} {# !!! IMPORTANT CHANGE: Extends your renamed base template 'sec_base.html' !!! #}
+
+{% block title %}My Tasks{% endblock %}
+
+{% block content %}
+    <h2>{{ username }}'s Tasks</h2>
+
+    <h3>Add New Task</h3>
+    {# The form submits a POST request to the 'task.view_task' route #}
+    <form action="{{ url_for('task.view_task') }}" method="post">
+        <input type="text" name="title" placeholder="Enter a new task..." required>
+        <input type="submit" value="Add Task">
+    </form>
+
+    <h3>Your Tasks:</h3>
+    {% if user_tasks %}
+        <ul>
+            {% for task in user_tasks %}
+                <li>
+                    {{ task.title }} (Created: {{ task.date_created.strftime('%Y-%m-%d %H:%M') }})
+                    {# Link to delete the task. 'task.delete' refers to the blueprint 'task' and function 'delete'. #}
+                    <a href="{{ url_for('task.delete', id=task.id) }}" style="color: red; margin-left: 10px;">[Delete]</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tasks yet! Add one above.</p>
+    {% endif %}
+{% endblock %}

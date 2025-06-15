@@ -1,0 +1,18 @@
+{% extends "sec_base.html" %} {# !!! IMPORTANT CHANGE: Extends your renamed base template 'sec_base.html' !!! #}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <h2>Register New Account</h2>
+    {# The form submits a POST request to the 'auth.submit_registration' route #}
+    <form action="{{ url_for('auth.submit_registration') }}" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Register">
+    </form>
+    <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login here</a>.</p>
+{% endblock %}
